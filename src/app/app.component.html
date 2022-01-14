@@ -2,16 +2,37 @@
   <div class="ui card">
     <h1>Team Generator</h1>
     <ul class="list">
-      <li>Rupam SHil</li>
-      <li>Subho Dey</li>
+      <li *ngFor="let member of members">{{ member }}</li>
     </ul>
     <div class="add-members-container">
-      <input type="text" placeholder="name" />
-      <button>Add</button>
+      <input
+        type="text"
+        placeholder="name"
+        #addMemberInput
+        (input)="onInput(addMemberInput.value)"
+        [value]="newMemberName"
+      />
+      <button (click)="addMember()">Add</button>
     </div>
     <div class="input-container">
-      <input type="text" placeholder="# no of teams" />
-      <button>Generate</button>
+      <input
+        type="number"
+        placeholder="# no of teams"
+        #numberOfTeams
+        this.errorMessage="Name can't be empty"
+        [value]="noOfTeams"
+        (input)="onNumberOfTeamsInput(numberOfTeams.value)"
+      />
+      <button (click)="generateTeams()">Generate</button>
+    </div>
+    <p class="error-msg" *ngIf="errorMessage">{{ errorMessage }}</p>
+  </div>
+  <div *ngFor="let team of teams">
+    <h2>Team {{ teams.indexOf(team) }}</h2>
+    <div class="ui card">
+      <ul class="list">
+        <li *ngFor="let member of team">{{ member }}</li>
+      </ul>
     </div>
   </div>
 </div>
